@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>付款页面</title>
+    <script src="/js/jquery-3.6.0.js"></script>
+    <script src="/js/jquery.qrcode.min.js"></script>
+
+
+</head>
+<body>
+    <div id="qrcode" style="height: 100px; width: 100px"></div>
+
+    <script>
+        $(function (){
+            $("#qrcode").qrcode({
+                text:"[[${qrcode}]]",
+                height: 100,
+                width:100
+            })
+        })
+    </script>
+</body>
+</html>

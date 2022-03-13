@@ -1,0 +1,21 @@
+server:
+  port: 80
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://itlover.ltd:3306/mall?characterEncoding=utf-8&userSSL=false
+    username: root
+    password: Tbl2425209089yyds
+  thymeleaf:
+    cache: false
+
+winxin-pay:
+  app-id: wx3e6b9f1c5a7ff034
+  merchant-id: 1614433647
+  merchant-key: Aa111111111122222222223333333333
+  notify-url: http://81.68.81.2/pay/notify
+swagger:
+  enabled: true
+security:
+  header-token-key: token
+
