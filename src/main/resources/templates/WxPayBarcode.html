@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>付款页面</title>
+    <script src="/js/jquery-3.6.0.js"></script>
+    <script src="/js/jquery.qrcode.min.js"></script>
+
+
+</head>
+<body>
+    <div id="qrcode" style="height: 100px; width: 100px"></div>
+
+    <script th:inline="javascript">
+        $(function (){
+            $("#qrcode").qrcode({
+                text:[[${qrcode}]],
+                height: 100,
+                width:100
+            })
+
+            setInterval(function () {
+                $.ajax({
+                    url: "/pay/queryByOrderNo",
+                    data: {
+                        'orderNo': "[[${orderNo}]]"
+                    },
+                    success: function (res) {
+                        if (res["platformStatus"] != null && res["platformStatus"] === "SUCCESS") {
+                            $('#qrcode').html("支付成功");
+                        }
+                    },
+                    error: function (res) {
+                        console.log(res);
+                    }
+                })
+            }, 2000);
+        })
+    </script>
+</body>
+</html>

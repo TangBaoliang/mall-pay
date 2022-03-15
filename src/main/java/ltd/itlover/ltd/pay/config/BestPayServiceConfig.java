@@ -1,5 +1,6 @@
 package ltd.itlover.ltd.pay.config;
 
+import com.lly835.bestpay.config.AliPayConfig;
 import com.lly835.bestpay.config.WxPayConfig;
 import com.lly835.bestpay.service.BestPayService;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
@@ -14,14 +15,21 @@ import org.springframework.context.annotation.Configuration;
  **/
 @Configuration
 public class BestPayServiceConfig {
-    @Value("${winxin-pay.app-id}")
+    @Value("${pay.winxin-pay.app-id}")
     private String appId;
-    @Value("${winxin-pay.merchant-id}")
+    @Value("${pay.winxin-pay.merchant-id}")
     private String merchantId;
-    @Value("${winxin-pay.merchant-key}")
+    @Value("${pay.winxin-pay.merchant-key}")
     private String merchantKey;
-    @Value("${winxin-pay.notify-url}")
+    @Value("${pay.notify-url}")
     private String notifyUrl;
+
+    @Value("${pay.ali-pay.ali-public-key}")
+    private String aliPublicKey;
+    @Value("${pay.ali-pay.private-key}")
+    private String aliPrivateKey;
+    @Value("${pay.ali-pay.app-id}")
+    private String aliPayAppId;
 
     @Bean
     public BestPayService bestPayService() {
@@ -32,6 +40,13 @@ public class BestPayServiceConfig {
         wxPayConfig.setNotifyUrl(notifyUrl);
         BestPayServiceImpl bestPayService = new BestPayServiceImpl();
         bestPayService.setWxPayConfig(wxPayConfig);
+
+        AliPayConfig aliPayConfig = new AliPayConfig();
+        aliPayConfig.setAppId(aliPayAppId);
+        aliPayConfig.setNotifyUrl(notifyUrl);
+        aliPayConfig.setAliPayPublicKey(aliPublicKey);
+        aliPayConfig.setPrivateKey(aliPrivateKey);
+        bestPayService.setAliPayConfig(aliPayConfig);
         return bestPayService;
     }
 }

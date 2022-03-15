@@ -1,5 +1,6 @@
 package ltd.itlover.ltd.pay.service.impl;
 
+import com.lly835.bestpay.enums.BestPayTypeEnum;
 import ltd.itlover.ltd.pay.service.IPayService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,6 @@ class IPayServiceImplTest {
 
     @Test
     void create() {
-        iPayService.create(231L, BigDecimal.valueOf(0.01));
+        iPayService.create(231L, BigDecimal.valueOf(0.01), BestPayTypeEnum.WXPAY_NATIVE);
     }
 }
