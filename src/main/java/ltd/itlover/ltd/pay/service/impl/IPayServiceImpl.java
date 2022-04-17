@@ -1,15 +1,18 @@
 package ltd.itlover.ltd.pay.service.impl;
+import com.google.gson.Gson;
 import com.lly835.bestpay.enums.BestPayTypeEnum;
 import com.lly835.bestpay.enums.OrderStatusEnum;
 import com.lly835.bestpay.model.PayRequest;
 import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.service.BestPayService;
+import com.sun.org.glassfish.external.statistics.annotations.Reset;
 import lombok.extern.slf4j.Slf4j;
 import ltd.itlover.ltd.pay.enums.PayPlatformEnum;
 import ltd.itlover.ltd.pay.mapper.PayInfoMapper;
 import ltd.itlover.ltd.pay.pojo.PayInfo;
 import ltd.itlover.ltd.pay.pojo.PayInfoExample;
 import ltd.itlover.ltd.pay.service.IPayService;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -23,11 +26,16 @@ import java.util.List;
 @Service
 @Slf4j
 public class IPayServiceImpl implements IPayService {
+    private final static String QUEUE_PAY_NOTIFY = "payNotify";
+
     @Resource
     private PayInfoMapper payInfoMapper;
 
     @Resource
     private BestPayService bestPayService;
+
+    @Resource
+    private AmqpTemplate amqpTemplate;
 
     @Override
     public PayResponse create( Long orderId,BigDecimal amount, BestPayTypeEnum payTypeEnum) {
@@ -76,6 +84,9 @@ public class IPayServiceImpl implements IPayService {
             payInfoMapper.updateByPrimaryKeySelective(payInfo);
         }
 
+        //TODO pay发送MQ消息， mall 接收MQ消息
+        amqpTemplate.convertAndSend(QUEUE_PAY_NOTIFY, new Gson().toJson(payInfo));
+
         switch (payResponse.getPayPlatformEnum()) {
             case WX: {
                 response = "<xml>\n" +
@@ -106,4 +117,6 @@ public class IPayServiceImpl implements IPayService {
         }
         return list.get(0);
     }
+
+
 }
