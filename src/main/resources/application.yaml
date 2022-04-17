@@ -8,6 +8,11 @@ spring:
     password: Tbl2425209089yyds
   thymeleaf:
     cache: false
+  rabbitmq:
+    addresses: 81.68.81.2
+    port: 5672
+    username: guest
+    password: Tbl2425209089yyds
 pay:
   winxin-pay:
     app-id: wx3e6b9f1c5a7ff034
