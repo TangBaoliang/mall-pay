@@ -4,6 +4,7 @@ import com.lly835.bestpay.enums.BestPayTypeEnum;
 import com.lly835.bestpay.model.PayResponse;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import ltd.itlover.ltd.pay.config.BestPayServiceConfig;
 import ltd.itlover.ltd.pay.pojo.PayInfo;
 import ltd.itlover.ltd.pay.service.IPayService;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,9 @@ public class PayController {
     @Resource
     private IPayService payService;
 
+    @Resource
+    private BestPayServiceConfig bestPayServiceConfig;
+
     @GetMapping("/create")
     public ModelAndView payment(@ApiParam("付款金额") BigDecimal amount,
                           @ApiParam("付款订单id")  Long orderId,
@@ -42,6 +46,7 @@ public class PayController {
             case WXPAY_NATIVE: {
                 modelAndView.setViewName("WxPayBarcode");
                 modelAndView.addObject("qrcode", payResponse.getCodeUrl());
+                modelAndView.addObject("returnUrl", bestPayServiceConfig.getReturnUrl());
                 modelAndView.addObject("orderNo", orderId);
                 break;
             }

@@ -4,6 +4,7 @@ import com.lly835.bestpay.config.AliPayConfig;
 import com.lly835.bestpay.config.WxPayConfig;
 import com.lly835.bestpay.service.BestPayService;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @email developert163@163.com
  **/
 @Configuration
+@Data
 public class BestPayServiceConfig {
     @Value("${pay.winxin-pay.app-id}")
     private String appId;

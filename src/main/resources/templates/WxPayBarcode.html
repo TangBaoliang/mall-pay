@@ -9,6 +9,7 @@
 
 </head>
 <body>
+<div id="returnUrl" hidden th:text="${returnUrl}"></div>
     <div id="qrcode" style="height: 100px; width: 100px"></div>
 
     <script th:inline="javascript">
@@ -27,7 +28,8 @@
                     },
                     success: function (res) {
                         if (res["platformStatus"] != null && res["platformStatus"] === "SUCCESS") {
-                            $('#qrcode').html("支付成功");
+                            alert("支付成功");
+                            location.href = $('#returnUrl').text();
                         }
                     },
                     error: function (res) {
