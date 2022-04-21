@@ -23,6 +23,8 @@ public class BestPayServiceConfig {
     private String merchantKey;
     @Value("${pay.notify-url}")
     private String notifyUrl;
+    @Value("${pay.return-url}")
+    private String returnUrl;
 
     @Value("${pay.ali-pay.ali-public-key}")
     private String aliPublicKey;
@@ -38,6 +40,7 @@ public class BestPayServiceConfig {
         wxPayConfig.setMchId(merchantId);
         wxPayConfig.setMchKey(merchantKey);
         wxPayConfig.setNotifyUrl(notifyUrl);
+        wxPayConfig.setReturnUrl(returnUrl);
         BestPayServiceImpl bestPayService = new BestPayServiceImpl();
         bestPayService.setWxPayConfig(wxPayConfig);
 
@@ -46,6 +49,7 @@ public class BestPayServiceConfig {
         aliPayConfig.setNotifyUrl(notifyUrl);
         aliPayConfig.setAliPayPublicKey(aliPublicKey);
         aliPayConfig.setPrivateKey(aliPrivateKey);
+        aliPayConfig.setReturnUrl(returnUrl);
         bestPayService.setAliPayConfig(aliPayConfig);
         return bestPayService;
     }

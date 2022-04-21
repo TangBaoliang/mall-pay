@@ -26,10 +26,10 @@ public class PayController {
     @Resource
     private IPayService payService;
 
-    @RequestMapping("/payment")
+    @GetMapping("/create")
     public ModelAndView payment(@ApiParam("付款金额") BigDecimal amount,
                           @ApiParam("付款订单id")  Long orderId,
-                          @ApiParam("支付方式") @RequestParam("payWay") BestPayTypeEnum payTypeEnum
+                          @ApiParam("支付方式") @RequestParam("payType") BestPayTypeEnum payTypeEnum
     ) {
         PayResponse payResponse = payService.create(orderId, amount, payTypeEnum);
         ModelAndView modelAndView = new ModelAndView();
@@ -52,16 +52,16 @@ public class PayController {
         return modelAndView;
     }
 
-    @RequestMapping("/notify")
+    @PostMapping("/notify")
     @ResponseBody
     public String notifyPay(@RequestBody String notifyData) {
         log.info("异步回调 = {}", notifyData);
         return payService.asyncNotify(notifyData);
     }
 
-    @GetMapping("/queryByOrderNo")
+    @GetMapping("/queryByOrderId")
     @ResponseBody
-    public PayInfo queryByOrderNo(@RequestParam("orderNo") Long orderNo) {
+    public PayInfo queryByOrderNo(@RequestParam("orderId") Long orderNo) {
         return payService.getByOrderNo(orderNo);
     }
 }
