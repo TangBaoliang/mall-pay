@@ -23,7 +23,7 @@
                 $.ajax({
                     url: "/pay/queryByOrderId",
                     data: {
-                        'orderNo': "[[${orderNo}]]"
+                        'orderId': "[[${orderNo}]]"
                     },
                     success: function (res) {
                         if (res["platformStatus"] != null && res["platformStatus"] === "SUCCESS") {
