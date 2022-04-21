@@ -13,6 +13,10 @@ spring:
     port: 5672
     username: guest
     password: Tbl2425209089yyds
+  mvc:
+    static-path-pattern: /pay/**
+  resources:
+    static-locations: classpath:/static/
 pay:
   winxin-pay:
     app-id: wx3e6b9f1c5a7ff034
